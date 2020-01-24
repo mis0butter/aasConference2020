@@ -2,7 +2,7 @@
 
 Meeting Notes will be organized from most recent date to earliest date. 
 
-12/2/2019
+## 12/2/2019
 
 1. Reinforcement learning on CMGs
     	- Spacecraft attitude control + constraints 
