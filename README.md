@@ -1,10 +1,14 @@
 # aasConference2020
 
-This is the repo for managing papers and code for the AAS Conference 2020.  Notes from meetings will be stored here. 
+This is the repo for managing papers and code for the AAS/AIAA Conference 2020. 
+
+The conference will be held August 9 - 13, 2020 at the Lake Tahoe Resort Hotel in South Lake Tahoe, CA. 
+
+The abstract deadline is April 10, 2020. Notification of acceptance will be sent via email by May 9, 2020. More details can be found on the conference website https://www.space-flight.org/docs/2020_summer/2020_summer.html.  
 
 # Meeting Notes
 
-Meeting Notes will be organized from most recent date to earliest date. 
+Meeting Notes will be organized from most recent date to the earliest date. 
 
 ## 1/24/2020 
 
