@@ -23,16 +23,16 @@ Controller
 	
 Dual quaternions 
 - Need to use kinematics + dual quaternion equations 
-	
-Tasks
-- Review literature 
-- Write introduction 
-- Come up with paper title 
-- Use Mendeley with LaTeX? 
 
 NASA Fellowship 
 - Possible: swarm project at Ames 
 - Phase 1 proposal due: Feb 21, 2020
+	
+### Tasks
+- Review literature 
+- Write introduction 
+- Come up with paper title 
+- Use Mendeley with LaTeX? 
 
 ## 1/17/2020 
 
@@ -42,7 +42,7 @@ Focus on 3 topics:
 2. SINDy 
 3. Dual Quaternions 
 
-Tasks: 
+### Tasks 
 - Ask Max RPO proposal
 - Ask Chriss RPO proposal 
 
