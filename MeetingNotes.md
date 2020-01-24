@@ -23,5 +23,5 @@ Meeting Notes will be organized from most recent date to earliest date.
 	
 Bong Wie: 
 * Space Vehicles Dynamics and Control 
-* chapters 7, 11, 12 
+	* chapters 7, 11, 12 
 	
