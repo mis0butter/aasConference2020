@@ -14,7 +14,7 @@ Meeting Notes will be organized from most recent date to earliest date.
 
 3. Fuel slosh 
 
-Key words: 
+4. Key words: 
 	- Reinforcement learning 
 	- Adaptive dynamic programming 
 	- Game theoretic optimal control 
