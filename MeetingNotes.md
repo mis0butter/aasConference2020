@@ -22,6 +22,6 @@ Meeting Notes will be organized from most recent date to earliest date.
 	- dual quaternions 
 	
 Bong Wie: 
-	* Space Vehicles Dynamics and Control 
-		* chapters 7, 11, 12 
+* Space Vehicles Dynamics and Control 
+* chapters 7, 11, 12 
 	
