@@ -2,6 +2,18 @@
 
 Meeting Notes will be organized from most recent date to earliest date. 
 
+## 1/17/2019 
+
+Focus on 3 topics: 
+
+1. MPC (model-predictive control) 
+2. SINDy 
+3. Dual Quaternions 
+
+Tasks: 
+- Ask Max RPO proposal
+- Ask Chriss RPO proposal 
+
 ## 12/2/2019
 
 1. Reinforcement learning on CMGs
