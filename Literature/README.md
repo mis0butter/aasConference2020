@@ -8,14 +8,14 @@ Model Predictive Control
 
 SINDy
 - SINDy analysis of disturbance and plant model superposition on a rolling delta wing
-	- https://arc.aiaa.org/doi/10.2514/6.2018-3068 (JH)
-- Sparse Identification of Nonlinear Dynamics with Control (SINDYc)*
+	- https://arc.aiaa.org/doi/10.2514/6.2018-3068 (DG)
+- Sparse Identification of Nonlinear Dynamics with Control (SINDYc)* (JH)
 	- https://www.sciencedirect.com/science/article/pii/S2405896316318298
 
 Dual Quaternions
-- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations
+- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations (JH)
 	- https://arc.aiaa.org/doi/10.2514/6.2020-0956
-- Extended Kalman Filter for Spacecraft Pose Estimation Using Dual Quaternions
+- Extended Kalman Filter for Spacecraft Pose Estimation Using Dual Quaternions (DG)
 	- https://arc.aiaa.org/doi/10.2514/1.G000977
 
 RPO 
