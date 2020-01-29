@@ -9,6 +9,12 @@ The abstract deadline is April 10, 2020. Notification of acceptance will be sent
 # Meeting Notes
 
 Meeting Notes will be organized from most recent date to the earliest date. 
+## 1/29/2020 
+
+MPC 
+- Contact Joey about posing the MPC problem correctly
+
+Present topic to Tim Lofquist
 
 ## 1/24/2020 
 
