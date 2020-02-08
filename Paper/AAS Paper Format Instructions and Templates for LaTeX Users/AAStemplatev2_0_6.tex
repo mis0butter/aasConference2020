@@ -15,7 +15,7 @@
 \usepackage{overcite}
 \usepackage{footnpag}			      	% make footnote symbols restart on each page
 
-
+% https://www.baen.com/rendezvous [1]
 
 
 \PaperNumber{XX-XXX}
@@ -54,7 +54,42 @@ Rendezvous Proximity Operations Equations of Motion Derived with SINDy and Contr
 
 Problem statement (general)
 
-The problem of performing orbit maneuvers where two spacecraft converge onto the same orbit is a called a space rendezvous. Two classification groups are generally utilized when describing the spacecraft taking part in these types of missions: target and chaser. The goal in these rendezvous operations is to control the active chaser satellite with the objective to match its orbit velocity and position to that of the passive target satellite (should we place target and chaser in quotes?). Once the chaser gets sufficiently close to the target, it can hold its relative position constant, follow a profile about the objective, or approach the spacecraft for docking (We are assuming constant relative position).
+Space rendezvous missions have been extensively analyzed using various forms of constrained path planning and optimization techniques. The combination of improved hardware and modern control techniques have made proximity operations more accurate and sophisticated. 
+
+Major breakthroughs in control theory have occurred in the field of robotics and chemical process industries since the 1980's, while the harsh environment of space has limited the kind of hardware, processing power, and control techniques used by spacecraft. Innovations in space-certified sensors and hardware are beginning to expand the capability of spacecraft control and the scope of on-orbit services, such as spacecraft refueling and spacecraft repair. 
+
+Richards and How explored using MPC for RPO[citation]. more previous literature ... MPC stuff ... state identification stuff ... constraints stuff ... 
+
+Richards and How developed and evaluated an MPC application with rendezvous mission against a traditional glideslope approach.
+
+Singh and Bortolami presented an MPC approach for a docking vehicle during its approach phases. They analyzed seven real-world cases of the space shuttle's standard orbit raising maneuver on its way to the ISS.
+
+Filipe and Tsiotras proposed an adaptive position and attitude controller for satellite proximit operations using dual quaternions. Their controller did not require information about the mass and inertia for the chaser satellite.
+
+Brunton, Proctor, and Kutz implemented a controller using Sparse Identification of Nonlinear Dynamics (SINDy). Using data, they derived governing equations for nonlinear dynamic systems, including forcing and input functions.
+
+Brunton, Proctor, and Kutz (https://www.pnas.org/content/113/15/3932.short) use SINDy to derive the dynamics of oscillators, chaotic Lorenz systems, and fluid vortex shedding behind an obstacle.
+
+
+Though this paper will be applying new techniques toward an established problem, it can hopefully expand the capability of RPO. 
+
+A space rendezvous is an orbit maneuver where two bodies in space converge onto the same orbit. Two classification groups are generally utilized when describing the spacecraft taking part in these types of missions: target and chaser. The goal in these rendezvous operations is to control the active chaser satellite to match the orbit velocity and position of the target body. Rendezvous operations can be broken down into two segments: inertial and relative. When the chase has the target outside of its sensor range, it is in the inertial segment of its approach. Once the chaser gets sufficiently close to reliably sense its target, it is in the relative segment of the approach, and proximity operations commence.  When in proximity operations it can: 
+
+1. hold its relative position constant, 
+2. follow a profile about the objective, 
+3. or approach the spacecraft for docking
+
+
+
+
+
+***
+
+Space rendezvous missions have been extensively analyzed using various forms of constrained path planning and optimization techniques. (REMOVE The ability to approach rendezvous missions with more stringent constraints has increased with the control capability.) The combination of sensor resolution and speed, modern control techniques along with faster processing, and finer actuation have made proximity operations more practical.
+
+(Make a better transition)A space rendezvous is a problem of performing orbit maneuvers where at least one active spacecraft and another, possibly passive space body converge onto the same orbit. Two classification groups are generally utilized when describing the spacecraft taking part in these types of missions: target and chaser. The goal in these rendezvous operations is to control the active chaser satellite with the objective to match its orbit velocity and position to that of the passive target body (should we place target and chaser in quotes?). Once the chaser gets sufficiently close to the target, it can hold its relative position constant, follow a profile about the objective, or approach the spacecraft for docking (We are assuming constant relative position REMOVE THIS).
+
+***
 
 *wordsmith* 
 Orbital rendezvous with a staellite in staitonary low-earth orbit has been extensively analyzed. Various forms of constrained path planning and optimization have been analyzed using modern optimization and serach techniques, however, as the capability and vaailability of targetting aids for cooperative proximity operations and docking have increased, the nature of the approach problem and the operational constraints during it have changed. 
