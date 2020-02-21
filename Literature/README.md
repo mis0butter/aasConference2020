@@ -1,24 +1,27 @@
-Model Predictive Control 
+Model Predictive Control and/or RPO
 - Constrained Autonomous Precision Landing via Dual Quaternions and Model Predictive Control (DG)
 	- https://arc.aiaa.org/doi/abs/10.2514/1.G001879
-- Optimal Guidance and Thruster Control in Orbital Approach and Rendezvous for Docking using Model Predictive Control (JH)
+- Optimal Guidance and Thruster Control in Orbital Approach and Rendezvous for Docking using Model Predictive Control (JH - noted)
 	- https://arc.aiaa.org/doi/10.2514/6.2010-7754
-- Performance Evaluation of Rendezvous Using Model Predictive Control (DG)
+- Performance Evaluation of Rendezvous Using Model Predictive Control (DG - noted)
 	- https://arc.aiaa.org/action/doSearch?AllField=docking+model+predictive+control
+- Analysis and Experimentation of Model Predictive Control for Spacecraft Rendezvous and Proximity Operations with Multiple Obstacle Avoidance (DG - noted)
+	- https://arc.aiaa.org/doi/pdfplus/10.2514/6.2016-5273
 
 SINDy
 - SINDy analysis of disturbance and plant model superposition on a rolling delta wing
-	- https://arc.aiaa.org/doi/10.2514/6.2018-3068 (DG)
-- Sparse Identification of Nonlinear Dynamics with Control (SINDYc)* (JH)
+	- https://arc.aiaa.org/doi/10.2514/6.2018-3068 (DG - noted)
+- Sparse Identification of Nonlinear Dynamics with Control (SINDYc)* (JH - noted)
 	- https://www.sciencedirect.com/science/article/pii/S2405896316318298
+- Sparse identification of nonlinear dynamics for model predictive control in the low-data limit (DG - noted)
+	- https://royalsocietypublishing.org/doi/full/10.1098/rspa.2018.0335
 
 Dual Quaternions
-- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations (JH)
+- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations (JH - noted)
 	- https://arc.aiaa.org/doi/10.2514/6.2020-0956
-- Extended Kalman Filter for Spacecraft Pose Estimation Using Dual Quaternions (DG)
+- Extended Kalman Filter for Spacecraft Pose Estimation Using Dual Quaternions (DG - noted)
 	- https://arc.aiaa.org/doi/10.2514/1.G000977
 
-RPO 
 
 
 | Name                                                                                                                                                                                                                 | Author(s)                                                                                                                              | Keywords                                                                                                         | Filename                                                                          |
