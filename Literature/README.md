@@ -43,3 +43,4 @@ Dual Quaternions
 | Sparse identification of nonlinear dynamics for model predictive control in the low-data limit [\*] | E. Kaiser, J.N. Kutz, and Steven L. Brunton | MPC, nonlinear dynamics, differential equations, mathematical modeling | SINDY_MPC_Brunton.pdf |
 | Convex Optimization (textbook) | Stephen Boyd 	Lieven Vandenberghe | linear programming, convex optimization | convex_optimization_boyd_vandenberghe.pdf |  
 | Extended Kalman Filter Using Dual Quaternions* |  Filipe | 
+| Spatial Rigid Body Dynamics using Dual Quaternion Components | J. R. Dooley 	J. M. McCarthy [\*] | equations of motion, dual quaternions, rigid body, Kane's method | rigid_dynamics_kanes_method_dualQs_dooley_mccarthy.pdf | 
