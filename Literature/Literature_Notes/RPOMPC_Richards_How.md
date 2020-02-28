@@ -9,7 +9,6 @@ Abstract
 - Lower fuel expended than traditional glideslope approach
 	
 
-
 Introduction
 - This new MPC has two new key features
 	- Handle general target region (doesn't need to be enclosing equillibrium)

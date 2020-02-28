@@ -35,10 +35,10 @@ Introduction
 
 Conclusion
 - Extends widely used Q-MEKF
-- 8 states necessary instead of 6 when using error unit dual quaternion
+- 6 states necessary instead of 8 when using error unit dual quaternion
 - Three forms are presented (see intro)
 - Experiments show no singularities, accuracy, precision, and fast enough for operational use
-- Might be best formulation if measurements are expressed in a difference reference frame thatn the variable to be estimated
+- Might be best formulation if measurements are expressed in a difference reference frame than the variable to be estimated
 	- Example: when one needs inertial measurements expressed in body frame for a control law
 
 
