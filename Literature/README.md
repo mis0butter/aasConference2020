@@ -40,3 +40,4 @@ Dual Quaternions
 | Performance Evaluation of Rendezvous Using Model Predictive Control* | Arthur Richards  Jonathan How                                                                                                          | MPC RPO  glideslope  fuel savings                                                                                | GlideSlopeApproach.pdf                                                            |
 | Sparse identification of nonlinear dynamics for model predictive control in the low-data limit | E. Kaiser, J.N. Kutz, and Steven L. Brunton | MPC, nonlinear dynamics, differential equations, mathematical modeling | SINDY_MPC_Brunton.pdf |
 | Convex Optimization (textbook) | Stephen Boyd 	Lieven Vandenberghe | linear programming, convex optimization | convex_optimization_boyd_vandenberghe.pdf |  
+| Extended Kalman Filter Using Dual Quaternions* |  Filipe | 
