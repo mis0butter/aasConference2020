@@ -24,6 +24,7 @@ Dual Quaternions
 
 
 \* Cited in paper
+
 [\*] Need to cite 
 
 | Name | Author(s) | Keywords | Filename |
