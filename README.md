@@ -9,6 +9,22 @@ The abstract deadline is April 10, 2020. Notification of acceptance will be sent
 # Meeting Notes
 
 Meeting Notes will be organized from most recent date to the earliest date. 
+
+## 2/24/2020 
+
+Paper introduction feedback 
+- title: "... with Sparse Dynamics Identification" 
+- remove J.Q. Public 
+- remove "trajectory optimization" 
+- move references cited to right after name of authors (instead of at end of sentence) 
+- benefit of dual quaternions is we can use other quat-based control laws 
+- MPC + SINDY good for sudden changes in system 
+- take out "predator-prey" model 
+- discuss: SINDY + PC vs. adaptive control laws? Tsiotras address constraints? 
+- what is the selling point of this paper 
+- more literature review on MPC + dual quaternions 
+- need at least 10 refs in intro  
+
 ## 1/29/2020 
 
 MPC 
