@@ -1,5 +1,5 @@
 Model Predictive Control and/or RPO
-- Constrained Autonomous Precision Landing via Dual Quaternions and Model Predictive Control (DG)
+- Constrained Autonomous Precision Landing via Dual Quaternions and Model Predictive Control (DG, only abstract available, noted FOUND PAPER)
 	- https://arc.aiaa.org/doi/abs/10.2514/1.G001879
 - Optimal Guidance and Thruster Control in Orbital Approach and Rendezvous for Docking using Model Predictive Control (JH - noted)
 	- https://arc.aiaa.org/doi/10.2514/6.2010-7754
@@ -17,7 +17,7 @@ SINDy
 	- https://royalsocietypublishing.org/doi/full/10.1098/rspa.2018.0335
 
 Dual Quaternions
-- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations (JH - noted)
+- Dual Quaternions for Perturbed Spacecraft Motion: Applications in Proximity Operations (JH - noted, not in table, cannot find pdf)
 	- https://arc.aiaa.org/doi/10.2514/6.2020-0956
 - Extended Kalman Filter for Spacecraft Pose Estimation Using Dual Quaternions (DG - noted)
 	- https://arc.aiaa.org/doi/10.2514/1.G000977
