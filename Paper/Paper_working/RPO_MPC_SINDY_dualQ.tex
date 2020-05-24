@@ -69,6 +69,40 @@ Robotics and spacecraft rendezvous operations go hand-in-hand, and the powerful 
 The contribution of this paper to the topics herein discuss
 This paper will use SINDY for system identification within a model predictive controller for space rendezvous proximity operations (RPO). The improved efficiency from using dual quaternions over regular quaternions will be explored. 
 
+\section{Relative Dynamic Equations for Rendezvous Proximity Operations}
+Assuming quasistatic mass and inertial properties of a chaser spacecraft, B, its motion dynamics relative to a target body, D, are governed by
+
+\begin{equation}
+\begin{aligned}
+	\label{eq:dyn}
+	(\dot{\hat{\omega}}^B_{B/D})^s = (\textbf{M}^B)^{-1}\star(\hat{f}^B-(\hat{\omega}^B_{B/D}+\hat{\omega}^B_{D/N})\times(\textbf{M}^B\star((\hat{\omega}^B_{B/D})^s+(\hat{\omega}^B_{D/N})^s))\\-\textbf{M}^B\star(\hat{q}^*_{B/D}\dot{\hat{\omega}}^D_{D/N}\hat{q}_{B/D})^s-\textbf{M}^B\star(\hat{\omega}^B_{D/N}\times\hat{\omega}^B_{B/D})^s)
+\end{aligned}
+\end{equation}
+
+
+\begin{equation}
+%\begin{aligned}
+\label{eq:mass_inertia}
+\textbf{M}^B = 
+\begin{bmatrix} 
+mI_{3x3} & 0_{3x1} & 0_{3x3} & 0_{3x1} \\ 
+0_{1x3} & 1 & 0_{1x3} & 0 \\ 
+0_{3x3} & 0_{3x1} & \bar{I}^B & 0_{3x1} \\ 
+0_{1x3} & 0 & 0_{1x3} & 1 
+\end{bmatrix}, 
+\bar{I}^B = 
+\begin{bmatrix} 
+I_{11} & I_{12}& I_{13} \\ 
+I_{21} & I_{22}& I_{23}\\ 
+I_{31} & I_{32}& I_{33}
+\end{bmatrix}
+%\end{aligned}
+\end{equation}
+
+\begin{equation}
+\label{eq:orbit_forces}
+\hat{f}^B = \hat{f}^B_g + \hat{f}^B_{\nabla g} + \hat{f}^B_{J_2} +\hat{f}^B_{s}+\hat{f}^B_{\mu} + \hat{f}^B_d + \hat{f}^B_c
+\end{equation}
 
 %%% GUIDELINES
 % The American Astronautical Society (AAS) publishes bound sets of printed conference proceedings for personal, institutional, and library usage. The availability of hardcopy enhances the longevity of your work and elevates the importance of your conference contribution to professionals through archival publication. To preserve the consistency and quality of the proceedings, all authors adhere to the latest version of AAS conference proceedings format.
