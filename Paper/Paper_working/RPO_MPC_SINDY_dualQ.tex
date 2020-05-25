@@ -24,11 +24,12 @@
 
 \begin{document}
 
+%%% CHANGE TITLE SEE NOTES%%%%
 \title{Rendezvous Proximity Operations Using Model Predictive Control with Dynamic Equations Derived Using SINDY and Dual Quaternions}
 
-\author{Junette Hsin\thanks{Title, department, affiliation, postal address.},  
-Daniel Gonzalez\thanks{Title, department, affiliation, postal address.},
-\ and Mohammad Ayoubi\thanks{Title, department, affiliation, postal address.}
+\author{Daniel Gonzalez\thanks{Title, department, affiliation, postal address.},
+	 Mohammad Ayoubi\thanks{Title, department, affiliation, postal address.} , 
+\ and Junette Hsin\thanks{Title, department, affiliation, postal address.}, 
 }
 
 
@@ -69,40 +70,74 @@ Robotics and spacecraft rendezvous operations go hand-in-hand, and the powerful 
 The contribution of this paper to the topics herein discuss
 This paper will use SINDY for system identification within a model predictive controller for space rendezvous proximity operations (RPO). The improved efficiency from using dual quaternions over regular quaternions will be explored. 
 
-\section{Relative Dynamic Equations for Rendezvous Proximity Operations}
-Assuming quasistatic mass and inertial properties of a chaser spacecraft, B, its motion dynamics relative to a target body, D, are governed by
-
+\section{Dual Quaternion Concept Example}
+All dynamics and controls equations discussed in this work are expressed using dual quaternions; before that is done, a quick introduction of this number set is given via an example. More thorough mathematical properties of quaternions, dual numbers, and dual quaternions are given in reference \citenum{filipe_tsiotras_dualQ}. Within the aerospace industry, single quaternions are used to express the attitude between two reference frames of interest. Combining quaternions with the concept of a dual number $\epsilon$, where $\epsilon^2 = 0$, but $\epsilon \ne 0$, allows the encoding of both rotational and translational information relating two reference frames. As an example, take the diagram in figure \ref{fig:Rel_Pos} showing the relative positions between chaser and target spacecraft orbiting a gravitational body. Using dual quaternions, one would express the pose of the chaser with respect to its target as
 \begin{equation}
 \begin{aligned}
-	\label{eq:dyn}
-	(\dot{\hat{\omega}}^B_{B/D})^s = (\textbf{M}^B)^{-1}\star(\hat{f}^B-(\hat{\omega}^B_{B/D}+\hat{\omega}^B_{D/N})\times(\textbf{M}^B\star((\hat{\omega}^B_{B/D})^s+(\hat{\omega}^B_{D/N})^s))\\-\textbf{M}^B\star(\hat{q}^*_{B/D}\dot{\hat{\omega}}^D_{D/N}\hat{q}_{B/D})^s-\textbf{M}^B\star(\hat{\omega}^B_{D/N}\times\hat{\omega}^B_{B/D})^s)
-\end{aligned}
+\label{eq:dual_quat_eg}
+\hat{q}_{B/D} = q_{B/D} + \epsilon \frac{1}{2} q_{B/D} r^B_{B/D},
+\end{aligned}\\
+\end{equation}
+where $q_{B/D}$ represents the attitude unit quaternion and $r^B_{B/D}$ is the relative position vector represented as a quaternion. Using quaternion vector and scalar parts expressed in ordered pairs, the attitude is
+\begin{equation}
+\begin{aligned}
+\label{eq:att_quat}
+q_{B/D} = (\textbf{n}\sin{(\phi/2)} , \cos{(\phi/2)}) 
+\end{aligned}\\
+\end{equation}
+where $\textbf{n}$ is the skew unit vector that one rotates frame D about by $\phi$ to get frame B. The relative position as a quaternion vector-scalar ordered pair is 
+\begin{equation}
+\begin{aligned}
+\label{eq:pos_quat}
+r_{B/D}^B = (\textbf{r}_{B/D}^B, 0).
+\end{aligned}\\
 \end{equation}
 
 
+\begin{figure}[htb]
+	\centering\includegraphics[width=3.5in]{Figures/RelativeDynamics.png}
+	\caption{Relative positions between chaser and target spacecraft, orbiting a gravitational body.}
+	\label{fig:Rel_Pos}
+\end{figure}
+
+\section{Relative Dynamic Equations for Rendezvous Proximity Operations}
+Assuming quasi-static mass and inertial properties of a chaser spacecraft, B, its motion dynamics relative to a target body, D, are governed by
 \begin{equation}
-%\begin{aligned}
-\label{eq:mass_inertia}
-\textbf{M}^B = 
+\begin{aligned}
+	\label{eq:dyn}
+	(\dot{\hat{\omega}}^B_{B/D})^s = (M^B)^{-1}\star(\hat{f}^B-(\hat{\omega}^B_{B/D}+\hat{\omega}^B_{D/N})\times(M^B\star((\hat{\omega}^B_{B/D})^s+(\hat{\omega}^B_{D/N})^s))\\-M^B\star(\hat{q}^*_{B/D}\dot{\hat{\omega}}^D_{D/N}\hat{q}_{B/D})^s-M^B\star(\hat{\omega}^B_{D/N}\times\hat{\omega}^B_{B/D})^s)
+\end{aligned}\\
+\end{equation}
+where the dual inertia of the chaser is
+\begin{equation}
+\label{eq:dual_inertia}
+M^B = 
 \begin{bmatrix} 
 mI_{3x3} & 0_{3x1} & 0_{3x3} & 0_{3x1} \\ 
 0_{1x3} & 1 & 0_{1x3} & 0 \\ 
 0_{3x3} & 0_{3x1} & \bar{I}^B & 0_{3x1} \\ 
 0_{1x3} & 0 & 0_{1x3} & 1 
 \end{bmatrix}, 
+\end{equation}
+given chaser mass $m$ and inertia in spacecraft fixed basis
+\begin{equation}
+\label{eq:sc_inertia}
 \bar{I}^B = 
 \begin{bmatrix} 
 I_{11} & I_{12}& I_{13} \\ 
 I_{21} & I_{22}& I_{23}\\ 
 I_{31} & I_{32}& I_{33}
-\end{bmatrix}
-%\end{aligned}
+\end{bmatrix},
 \end{equation}
-
+and the total external dual force applied to the body about its mass center, in the spacecraft frame is
 \begin{equation}
 \label{eq:orbit_forces}
-\hat{f}^B = \hat{f}^B_g + \hat{f}^B_{\nabla g} + \hat{f}^B_{J_2} +\hat{f}^B_{s}+\hat{f}^B_{\mu} + \hat{f}^B_d + \hat{f}^B_c
+\hat{f}^B = \hat{f}^B_g + \hat{f}^B_{\nabla g} + \hat{f}^B_{J_2} +\hat{f}^B_{s}+\hat{f}^B_{\mu} + \hat{f}^B_d + \hat{f}^B_c.
 \end{equation}
+The components that make up the total external dual force, in the order shown in \eqref{eq:orbit_forces}, are gravitational acceleration, gravity-gradient torque, Earth-oblateness acceleration, solar dual force, atmospheric drag, dual disturbance force, and finally control dual force.
+
+\section{SINDY With MPC}
+This work will extend the application in reference \citenum{KaiserKutz_Sparse} to RPO.
 
 %%% GUIDELINES
 % The American Astronautical Society (AAS) publishes bound sets of printed conference proceedings for personal, institutional, and library usage. The availability of hardcopy enhances the longevity of your work and elevates the importance of your conference contribution to professionals through archival publication. To preserve the consistency and quality of the proceedings, all authors adhere to the latest version of AAS conference proceedings format.
