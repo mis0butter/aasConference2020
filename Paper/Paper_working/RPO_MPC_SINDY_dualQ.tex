@@ -136,8 +136,10 @@ and the total external dual force applied to the body about its mass center, in 
 \end{equation}
 The components that make up the total external dual force, in the order shown in \eqref{eq:orbit_forces}, are gravitational acceleration, gravity-gradient torque, Earth-oblateness acceleration, solar dual force, atmospheric drag, dual disturbance force, and finally control dual force.
 
-\section{SINDY With MPC}
-This work will extend the application in reference \citenum{KaiserKutz_Sparse} to rendezvous maneuvers.
+\section{MPC with SINDY}
+Control methods that utilize system models, such as MPC, are powerful because of their potential application to nonlinear systems with constraints. Nevertheless, this strength in the control domain can be a weakness when it comes to computational efficiency and data taking requirements. The investigations in references \citenum{KaiserKutz_Sparse} and \citenum{BruntonProctor_SparseID} show how both of these potential drawbacks can be mitigated with the use of SINDY for system identification. These same methods will be expanded upon to be used with rendezvous proximity maneuver applications.
+
+Figure \ref{fig:SINDY_MPC} shows an overview of how SINDY will be applied to rendezvous maneuvers via MPC. The sparse regression algorithm will take in noisy attitude and range sensor data, to calculate an approximation of the relative motion dynamics expressed by equation \eqref{eq:dyn}. More specifically, mass, inertia, external forces and torques, and actuation forces and torques will be determined for use in the MPC optimal control problem \cite{KaiserKutz_Sparse}. As depicted in \ref{fig:SINDY_MPC}, unknown dynamic sensor data and a library of candidate terms are taken to construct a sparse regression problem. The identified system comes out as a solution to the posed problem.
 \begin{figure}[h!]
 	\centering\includegraphics[width=3.5in]{Figures/SINDY_MPC.pdf}
 	\caption{System identification using SINDY within model predictive control, for RPO.}
@@ -148,6 +150,8 @@ This work will extend the application in reference \citenum{KaiserKutz_Sparse} t
 	\caption{Process of using measured data to identify nonlinear system dynamics.}
 	\label{fig:SINCYC}
 \end{figure}
+
+
 %%% GUIDELINES
 % The American Astronautical Society (AAS) publishes bound sets of printed conference proceedings for personal, institutional, and library usage. The availability of hardcopy enhances the longevity of your work and elevates the importance of your conference contribution to professionals through archival publication. To preserve the consistency and quality of the proceedings, all authors adhere to the latest version of AAS conference proceedings format.
 
