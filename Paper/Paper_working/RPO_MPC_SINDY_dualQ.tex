@@ -94,7 +94,7 @@ r_{B/D}^B = (\textbf{r}_{B/D}^B, 0).
 \end{equation}
 
 
-\begin{figure}[htb]
+\begin{figure}[h!]
 	\centering\includegraphics[width=3.5in]{Figures/RelativeDynamics.png}
 	\caption{Relative positions between chaser and target spacecraft, orbiting a gravitational body.}
 	\label{fig:Rel_Pos}
@@ -137,8 +137,17 @@ and the total external dual force applied to the body about its mass center, in 
 The components that make up the total external dual force, in the order shown in \eqref{eq:orbit_forces}, are gravitational acceleration, gravity-gradient torque, Earth-oblateness acceleration, solar dual force, atmospheric drag, dual disturbance force, and finally control dual force.
 
 \section{SINDY With MPC}
-This work will extend the application in reference \citenum{KaiserKutz_Sparse} to RPO.
-
+This work will extend the application in reference \citenum{KaiserKutz_Sparse} to rendezvous maneuvers.
+\begin{figure}[h!]
+	\centering\includegraphics[width=3.5in]{Figures/SINDY_MPC.png}
+	\caption{System identification using SINDY within model predictive control, for RPO.}
+	\label{fig:SINDY_MPC}
+\end{figure}
+\begin{figure}[h!]
+	\centering\includegraphics[width=3.5in]{Figures/SINDYC.png}
+	\caption{Process of using measured data to identify nonlinear system dynamics.}
+	\label{fig:SINCYC}
+\end{figure}
 %%% GUIDELINES
 % The American Astronautical Society (AAS) publishes bound sets of printed conference proceedings for personal, institutional, and library usage. The availability of hardcopy enhances the longevity of your work and elevates the importance of your conference contribution to professionals through archival publication. To preserve the consistency and quality of the proceedings, all authors adhere to the latest version of AAS conference proceedings format.
 
@@ -152,8 +161,6 @@ This work will extend the application in reference \citenum{KaiserKutz_Sparse} t
 
 % The body text of this template is based on the preferred font size of 11 points. To change this to 12-point size, increase the font size at the top of the \LaTeX\ template by uncommenting the appropriate {\tt documentclass[]\{\}} line. For very long manuscripts, a 10-point font may be used to keep the manuscript within the publisher's limit of twenty (20) physical pages.
 
-
-\section{This is a Sample of a General Section Heading}
 
 
 %%% NEEDS LOTS OF WORK 
@@ -227,13 +234,13 @@ This work will extend the application in reference \citenum{KaiserKutz_Sparse} t
 %	a = b^{2}
 %\end{equation}
 
-\subsubsection{Equations.} 
+%\subsubsection{Equations.} 
 %%% GUIDELINES
 %Equations are centered with the equation number flush to the right. In the text, these equations should be referenced by name as Eq.~\eqref{eq:ab} or Equation~\eqref{eq:ab} (\emph{e.g}., not eq. 1, (1), or \emph{Equation 1}). To improve readability, scalar variable names such as $a$ and $b^{2}$ are usually italicized when appearing in text and equations.\footnote{A section on mathematical notation is provided in the sequel.}
 
 
 
-\subsubsection{Abbreviations.}
+%\subsubsection{Abbreviations.}
 %%% GUIDELINES 
 %When abbreviations for units of measure are used, lower case without periods is preferred in most instances; \emph{e.g}. ft, yd, sec, ft/sec, \emph{etc}., but in. for inch.
 %
@@ -246,7 +253,7 @@ This work will extend the application in reference \citenum{KaiserKutz_Sparse} t
 %	\label{fig:xxx}
 %\end{figure}
 
-\subsubsection{Figures.}   
+%\subsubsection{Figures.}   
 %%% GUIDELINES
 %Illustrations are referenced by name and without formatting embellishments, such as Figure~\ref{fig:xxx}, Figure 2, \emph{etc}., or, Figures 3 and 4 (\emph{e.g}., not figure (1), Fig. 1, \underline{Figure 1}, \emph{Figure 1}, \emph{etc}.). Each illustration should have a caption unless it is a mere sketch. Single-phrase captions are usually in title case; they are bold 10-point serif font and centered below the figure as shown in Figure~\ref{fig:xxx}. An explanatory caption of several sentences is permissible. Ideally, every illustration should be legibly sized -- usually about one-half or one-quarter page -- and appear in the text just before it is called out or mentioned. Alternatively, it is also permissible to place all figures together at the end of the text as a separate appendix; however, these two conventions should not be mixed. All figures and callouts should remain clearly legible after reduction. All illustrations appear as black and white in the final printing, although colors are retained in the electronic (CD-ROM) version.
 
