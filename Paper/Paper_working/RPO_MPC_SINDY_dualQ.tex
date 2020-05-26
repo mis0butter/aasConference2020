@@ -24,11 +24,13 @@
 
 \begin{document}
 
-\title{Rendezvous Proximity Operations Using Model Predictive Control with Dynamic Equations Derived Using SINDY and Dual Quaternions}
+%%% CHANGE TITLE SEE NOTES%%%%
+\title{Rendezvous Proximity Operations Using Model Predictive Control with Sparse Dynamics Identification}
 
-\author{Junette Hsin\thanks{Title, department, affiliation, postal address.},  
-Daniel Gonzalez\thanks{Title, department, affiliation, postal address.},
-\ and Mohammad Ayoubi\thanks{Title, department, affiliation, postal address.}
+\author{Daniel Gonzalez\thanks{Engineer, Dynamics and Control Analysis Group, Maxar Space Infrastructure (formerly SSL), 3825 Fabian Way, Palo Alto, CA 94303 U.S.A.},
+	 Mohammad Ayoubi\thanks{Associate Professor, Department of Mechanical Engineering, Santa Clara University, 500 El Camino Real,
+	 	Santa Clara, CA 95053 U.S.A. AIAA senior member, AAS senior member.} , 
+\ and Junette Hsin\thanks{Engineer, Dynamics and Control Analysis Group, Maxar Space Infrastructure (formerly SSL), 3825 Fabian Way, Palo Alto, CA 94303 U.S.A.}, 
 }
 
 
@@ -60,14 +62,112 @@ One of those well-studied rendezvous methods utilizes model-predictive control (
 
 Another control scheme that has been used for rendezvous maneuvers is called adaptive control. Filipe and Tsiotras proposed an adaptive position and attitude (pose) tracking controller for proximity operations that requires no knowledge about the mass and inertia of the chaser satellite \cite{filipe_tsiotras_dualQ}. It can also take into account gravitational acceleration, gravity-gradient torque, and other constant disturbance forces and torques. This method can perform system identification of the chaser satellite, given that sufficient conditions are met, and then proceed to approach and then dock the target satellite. 
 
-For MPC, adaptive control, and other methods, offline and online system identification techniques are a necessity if high accuracy and precision control is desired, which many times requires costly and expensive volumes of data collection and processing. Within the previously cited adaptive control implementation, Filipe and Tsiotras calculate mass and inertia properties of the system by using known sets of disturbance forces and torques. With this method, the system identification is limited by the measurement quality of the applied forces and torques. There is another system identification technique that was investigated by Kaiser, Kutz, and Brunton that was used within an MPC method called sparse identification of nonlinear dynamics (SINDY) \cite{KaiserKutz_SparseID}. SINDY is a data-driven system identification algorithm which can be used to derive governing equations for a nonlinear dynamic systems. In this work, the authors compare SINDY to dynamic mode decomposition (DMD) and a multilayer neural network (NN). They show that sparse identification is preferred when a low volume of noisy data is available and a fast computation time is required. Also, SINDY sheds light on the underlying nonlinear dynamic equations of the system, instead of just having a black box that sheds little to no physical insight. Another strength of SINDY is that it is fast enough to run on embedded systems \cite{provost_williams_SINDY}. Lastly one of the most useful features of SINDY is that the system identification can be used in with control inputs along with other external forcing. SINDY has a few weaknesses, but they can be mitigated. The first is that a sufficient library of functions must be assumed to identify high-dimensional systems \cite{KaiserKutz_SparseID}; this can be prevented by increasing the function library size. Another drawback to this technique is that it does not react effectively to abrupt changes in dynamics, but this can be mitigated by using linear methods like DMD while the system dynamics settle\cite{KaiserKutz_SparseID}.
+For MPC, adaptive control, and other methods, offline and online system identification techniques are a necessity if high accuracy and precision control is desired, which many times requires costly and expensive volumes of data collection and processing. Within the previously cited adaptive control implementation, Filipe and Tsiotras calculate mass and inertia properties of the system by using known sets of disturbance forces and torques. With this method, the system identification is limited by the measurement quality of the applied forces and torques. There is another system identification technique that was investigated by Kaiser, Kutz, and Brunton that was used within an MPC method called sparse identification of nonlinear dynamics (SINDY) \cite{KaiserKutz_SparseID}. SINDY is a data-driven system identification algorithm which can be used to derive governing equations for a nonlinear dynamic systems. In this work, the authors compare SINDY to dynamic mode decomposition (DMD) and a multilayer neural network (NN). They show that sparse identification is preferred when a low volume of noisy data is available and a fast computation time is required. Also, SINDY sheds light on the underlying nonlinear dynamic equations of the system, instead of just having a black box that sheds little to no physical insight. Another strength of SINDY is that it is fast enough to run on embedded systems \cite{provost_williams_SINDY}. Lastly one of the most useful features of SINDY is that the system identification can be used with control inputs along with other external forcing. SINDY has a few weaknesses, but they can be mitigated. The first is that a sufficient library of functions must be assumed to identify high-dimensional systems \cite{KaiserKutz_SparseID}; this can be prevented by increasing the function library size. Another drawback to this technique is that it does not react effectively to abrupt changes in dynamics, but this concern can be alleviated by using linear methods like DMD while the system dynamics settle\cite{KaiserKutz_SparseID}.
  
 
-Robotics and spacecraft rendezvous operations go hand-in-hand, and the powerful tool known as dual quaternions, used mostly with robots, can brought over to bridge the gap to the on-orbit servicing realm \cite{valverde_tsiotras_spacecraftrobot}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position or translation. Dual quaternions preferred over quaternion-vector representations for several reasons. Control laws can be written in a more compact form, pose transformations requires less computations than quaternion-vector method, natural coupling between rotational and translational motion is inherent, there is a strong parallel between rotational-only kinematics and rotation-translation dual quaternion kinematics, control stability is proven in one step, often controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions, kinematics can be obtained easily because of multiplicative properties, constraint equations come in a simple form, and problems involving kinematic chains are more easily solved \cite{filipe_tsiotras_dualQ,tsiotras_valverde_DualQuatAsTool,dooley_mccarthy_spatialrigidbody}. Using this number set does come with what some may see as a drawback. Two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands. \cite{dooley_mccarthy_spatialrigidbody,lee_mesbahi,constrainedautonomousprecision}
+Robotics and spacecraft rendezvous operations go hand-in-hand, and a powerful tool known as dual quaternions, used mostly with robots, can be brought over to bridge the gap to the on-orbit servicing realm \cite{valverde_tsiotras_spacecraftrobot}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position and translation. Dual quaternions are preferred over quaternion-vector representations for several reasons. Control laws can be written in a more compact form, pose transformations requires less computations than quaternion-vector method, natural coupling between rotational and translational motion is inherent, there is a strong parallel between rotational-only kinematics and rotation-translation dual quaternion kinematics, control stability is proven in one step, often controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions, kinematics can be obtained easily because of multiplicative properties, constraint equations come in a simple form, and problems involving kinematic chains are more easily solved \cite{filipe_tsiotras_dualQ,tsiotras_valverde_DualQuatAsTool,dooley_mccarthy_spatialrigidbody}. Using this number set does come with what some may see as a drawback. For instance, two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands. \cite{dooley_mccarthy_spatialrigidbody,lee_mesbahi,constrainedautonomousprecision}
 
 
-The contribution of this paper to the topics herein discuss
-This paper will use SINDY for system identification within a model predictive controller for space rendezvous proximity operations (RPO). The improved efficiency from using dual quaternions over regular quaternions will be explored. 
+The contribution of this paper to the topics herein discussed is to apply MPC to RPO while gathering system dynamics knowledge solely using SINDY. A trade study will be conducted varying orbit parameters, mass properties, measurement noise, and controller constraints. All analysis will be done with dual quaternions to provide another example of their industry-proven strengths.
+
+\section{Dual Quaternion Concept Example}
+All dynamics and controls equations discussed in this work are expressed using dual quaternions; before diving in, a quick introduction of this number set is given via an example. More thorough mathematical properties of quaternions, dual numbers, dual quaternions, and necessary operators are given in reference \citenum{filipe_tsiotras_dualQ}. 
+
+Within the aerospace industry, single quaternions are used to express the attitude between two reference frames of interest. Combining quaternions with the concept of a dual number $\epsilon$, where $\epsilon^2 = 0$, but $\epsilon \ne 0$, allows the encoding of both rotational and translational information relating two reference frames. As an example, take the diagram in figure \ref{fig:Rel_Pos} showing the relative positions between chaser and target spacecraft orbiting a gravitational body. Expressing dual quaternions with a hat symbol, one would express the pose of the chaser with respect to its target as
+
+\begin{figure}[h!]
+	\centering\includegraphics[width=3.5in]{Figures/REL_POSE.pdf}
+	\caption{Relative positions between chaser and target spacecraft, orbiting a gravitational body.}
+	\label{fig:Rel_Pos}
+\end{figure}
+
+\begin{equation}
+\begin{aligned}
+\label{eq:dual_quat_eg}
+\hat{q}_{B/D} = q_{B/D} + \epsilon \frac{1}{2} q_{B/D} r^B_{B/D},
+\end{aligned}\\
+\end{equation}
+where $q_{B/D}$ is the attitude unit quaternion and $r^B_{B/D}$ is the relative position vector of the chaser with respect to the target, in a body fixed basis, represented as a quaternion. Quaternions can be expressed using an ordered pair where the first and second coordinates are the vector and scalar parts, respectively. Using that notation, the attitude is
+\begin{equation}
+\label{eq:att_quat}
+q_{B/D} = (\textbf{n}\sin{(\phi/2)} , \cos{(\phi/2)}) 
+\end{equation}
+where $\textbf{n}$ is the skew unit vector that one rotates frame D about by $\phi$ to get frame B. The relative position as a quaternion vector-scalar ordered pair is 
+\begin{equation}
+\label{eq:pos_quat}
+r_{B/D}^B = (\textbf{r}_{B/D}^B, 0).
+\end{equation}
+%Another operator needed to understand the relative motion equation is the dual quaternion conjugation where
+%\begin{equation}
+%\label{eq:dual_conjugation}
+%\hat{q}^* = \hat{q}^*_r + \epsilon\hat{q}^*_d,
+%\end{equation}
+%assuming $\hat{q}^*_r$ and $\hat{q}^*_d$ are the real and dual parts of $\hat{q}$, and the $*$ operator denotes a quaternion conjugate. The relative dynamics equation also has a 
+
+
+\section{Relative Dynamic Equations for Rendezvous Proximity Operations}
+Assuming quasi-static mass and inertial properties of a chaser spacecraft, B, its motion dynamics relative to a target body, D, are governed by
+\begin{equation}
+\begin{aligned}
+	\label{eq:dyn}
+	(\dot{\hat{\omega}}^B_{B/D})^s = (M^B)^{-1}\star(\hat{f}^B-(\hat{\omega}^B_{B/D}+\hat{\omega}^B_{D/N})\times(M^B\star((\hat{\omega}^B_{B/D})^s+(\hat{\omega}^B_{D/N})^s))\\-M^B\star(\hat{q}^*_{B/D}\dot{\hat{\omega}}^D_{D/N}\hat{q}_{B/D})^s-M^B\star(\hat{\omega}^B_{D/N}\times\hat{\omega}^B_{B/D})^s)
+\end{aligned}\\
+\end{equation}
+where the dual inertia of the chaser is
+\begin{equation}
+\label{eq:dual_inertia}
+M^B = 
+\begin{bmatrix} 
+mI_{3x3} & 0_{3x1} & 0_{3x3} & 0_{3x1} \\ 
+0_{1x3} & 1 & 0_{1x3} & 0 \\ 
+0_{3x3} & 0_{3x1} & \bar{I}^B & 0_{3x1} \\ 
+0_{1x3} & 0 & 0_{1x3} & 1 
+\end{bmatrix}, 
+\end{equation}
+given chaser mass $m$ and inertia in spacecraft fixed basis
+\begin{equation}
+\label{eq:sc_inertia}
+\bar{I}^B = 
+\begin{bmatrix} 
+I_{11} & I_{12}& I_{13} \\ 
+I_{21} & I_{22}& I_{23}\\ 
+I_{31} & I_{32}& I_{33}
+\end{bmatrix},
+\end{equation}
+and the total external dual force applied to the body about its mass center, in the spacecraft frame is
+\begin{equation}
+\label{eq:orbit_forces}
+\hat{f}^B = \hat{f}^B_g + \hat{f}^B_{\nabla g} + \hat{f}^B_{J_2} +\hat{f}^B_{s}+\hat{f}^B_{\mu} + \hat{f}^B_d + \hat{f}^B_c.
+\end{equation}
+The components that make up the total external dual force, in the order shown in \eqref{eq:orbit_forces}, are gravitational force, gravity-gradient torque, Earth-oblateness force, solar dual force, atmospheric drag, dual disturbance force, and finally control dual force.
+
+\section{Using SINDY for System Identification within MPC}
+Control methods that utilize system models, such as MPC, are powerful because of their potential application to nonlinear systems with constraints. Nevertheless, this strength in the control domain can come hand-in-hand with a computational efficiency and data logging requirement weakness. The investigations in references \citenum{KaiserKutz_Sparse} and \citenum{BruntonProctor_SparseID} show how both of these potential drawbacks can be mitigated with the use of SINDY for system identification. These same methods will be adapted to rendezvous proximity maneuver applications.
+
+Figure \ref{fig:SINDY_MPC} shows an overview of how SINDY will be applied to rendezvous maneuvers via MPC. The sparse regression algorithm will take in noisy attitude and range sensor data to calculate an approximation of the relative motion dynamics expressed by equation \eqref{eq:dyn}. More specifically, mass, inertia, external forces and torques will be determined only with sensor data for use in the MPC optimal control problem \cite{KaiserKutz_Sparse}. 
+\begin{figure}[h!]
+	\centering\includegraphics[width=3.5in]{Figures/SINDY_MPC.pdf}
+	\caption{System identification using SINDY within MPC, for RPO.}
+	\label{fig:SINDY_MPC}
+\end{figure}
+
+The diagram shown in figure \ref{fig:SINCYC} shows the process of solving for the system model. First, to present the identification problem in solvable way, one must first collect measurement data from the unknown dynamic system represented by
+\begin{equation}
+\label{eq:unknown_dyn}
+\dot{X} = \Xi\Theta(X,U).
+\end{equation}
+Then the control developer must select a library of candidate functions that will be used to build $\Theta(X,U)$. The candidate terms can include polynomial, trigonometric, and other nonlinear functions of states $X$ and inputs $U$. One then substitutes in the measured data into $\dot{X}$ and $\Theta$ in equation \eqref{eq:unknown_dyn}, and we choose $\Xi$ such that we have the minimum number of terms that effectively describe our dynamics. In other words, we solve for  
+\begin{equation}
+\label{eq:sparse_reg}
+\xi_k = \text{arg}\,\min\limits_{\xi_k}\frac{1}{2}||\dot{X}_k-\xi_k\Theta(X,U)||^2+\lambda||\xi_k||, 
+\end{equation}
+where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscript{th} term of $\dot{X}$ and $\Xi$, and $\lambda$ is chosen to balance between model complexity and accuracy.
+
+\begin{figure}[h!]
+	\centering\includegraphics[width=3.5in]{Figures/SINDYC.pdf}
+	\caption{Process of using measured data to identify nonlinear system dynamics.}
+	\label{fig:SINCYC}
+\end{figure}
 
 
 %%% GUIDELINES
@@ -83,8 +183,6 @@ This paper will use SINDY for system identification within a model predictive co
 
 % The body text of this template is based on the preferred font size of 11 points. To change this to 12-point size, increase the font size at the top of the \LaTeX\ template by uncommenting the appropriate {\tt documentclass[]\{\}} line. For very long manuscripts, a 10-point font may be used to keep the manuscript within the publisher's limit of twenty (20) physical pages.
 
-
-\section{This is a Sample of a General Section Heading}
 
 
 %%% NEEDS LOTS OF WORK 
@@ -158,13 +256,13 @@ This paper will use SINDY for system identification within a model predictive co
 %	a = b^{2}
 %\end{equation}
 
-\subsubsection{Equations.} 
+%\subsubsection{Equations.} 
 %%% GUIDELINES
 %Equations are centered with the equation number flush to the right. In the text, these equations should be referenced by name as Eq.~\eqref{eq:ab} or Equation~\eqref{eq:ab} (\emph{e.g}., not eq. 1, (1), or \emph{Equation 1}). To improve readability, scalar variable names such as $a$ and $b^{2}$ are usually italicized when appearing in text and equations.\footnote{A section on mathematical notation is provided in the sequel.}
 
 
 
-\subsubsection{Abbreviations.}
+%\subsubsection{Abbreviations.}
 %%% GUIDELINES 
 %When abbreviations for units of measure are used, lower case without periods is preferred in most instances; \emph{e.g}. ft, yd, sec, ft/sec, \emph{etc}., but in. for inch.
 %
@@ -177,7 +275,7 @@ This paper will use SINDY for system identification within a model predictive co
 %	\label{fig:xxx}
 %\end{figure}
 
-\subsubsection{Figures.}   
+%\subsubsection{Figures.}   
 %%% GUIDELINES
 %Illustrations are referenced by name and without formatting embellishments, such as Figure~\ref{fig:xxx}, Figure 2, \emph{etc}., or, Figures 3 and 4 (\emph{e.g}., not figure (1), Fig. 1, \underline{Figure 1}, \emph{Figure 1}, \emph{etc}.). Each illustration should have a caption unless it is a mere sketch. Single-phrase captions are usually in title case; they are bold 10-point serif font and centered below the figure as shown in Figure~\ref{fig:xxx}. An explanatory caption of several sentences is permissible. Ideally, every illustration should be legibly sized -- usually about one-half or one-quarter page -- and appear in the text just before it is called out or mentioned. Alternatively, it is also permissible to place all figures together at the end of the text as a separate appendix; however, these two conventions should not be mixed. All figures and callouts should remain clearly legible after reduction. All illustrations appear as black and white in the final printing, although colors are retained in the electronic (CD-ROM) version.
 
