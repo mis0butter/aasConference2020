@@ -25,7 +25,7 @@
 \begin{document}
 
 %%% CHANGE TITLE SEE NOTES%%%%
-\title{Rendezvous Proximity Operations Using Model Predictive Control with Sparse Dynamics Identification}
+\title{Model Predictive Control with Sparse Dynamics Identification for Spacecraft Rendezvous}
 
 \author{Daniel Gonzalez\thanks{Engineer, Dynamics and Control Analysis Group, Maxar Space Infrastructure (formerly SSL), 3825 Fabian Way, Palo Alto, CA 94303 U.S.A.},
 	 Mohammad Ayoubi\thanks{Associate Professor, Department of Mechanical Engineering, Santa Clara University, 500 El Camino Real,
@@ -39,7 +39,7 @@
 
 \begin{abstract}
 	
-The abstract should briefly state the purpose of the manuscript, the problem to be addressed, the approach taken, and the nature of results or conclusions that can be expected. It should stand independently and tell enough about the manuscript to permit the reader to decide whether the subject is of specific interest. The abstract shall be typed single space, justified, centered, and with a column width of 4.5 inches. The abstract is not preceded by a heading of ``Abstract'' and its length may not extend beyond the first page.
+This paper presents an optimal control solution for the spacecraft rendezvous proximity operations (RPO) problem using dual quaternions. We propose a model predictive control (MPC) law with sparse identification of nonlinear dynamics (SINDY) technique as an identifier to control the attitude and position of a chaser with respect to a target in a circular or elliptical orbit. The proposed MPC minimizes the fuel expenditure in the presence of external disturbances while satisfying the actuators' constraints. We verify the efficacy and robustness of the proposed controller via numerical simulations.
 
 \end{abstract}
 
@@ -56,24 +56,29 @@ The abstract should briefly state the purpose of the manuscript, the problem to 
 %
 %Problem statement (general)
 
-Space rendezvous missions have been extensively analyzed implementing various forms of constrained path planning and optimization techniques; many of which require high fidelity system identification of the chaser satellite. The combination of improvements in space-certified hardware and modern control techniques have expanded the capability of spacecraft control and the scope of on-orbit services. These advances have begun to democratize industry-changing missions like satellite refueling, inspection, and repair, along with debris removal or avoidance \cite{ParkZagaris_AnalysisandExperimention,cairano_park_MPC}. The increased need and application of these mission types has inspired further research in methods to lower costs, increase fuel savings, and find solutions to rendezvous problems with increasingly complex constraints, all while optimizing for computational efficiency.
+Space rendezvous missions have been extensively analyzed implementing various forms of constrained path planning and optimization techniques; many of which require high fidelity system identification of the chaser satellite. The combination of improvements in space-certified hardware and modern control techniques have expanded the capability of spacecraft control and the scope of on-orbit services, such as satellite refueling, inspection, and repair, and debris avoidance and removal \cite{MPC_RPO_Park_Zagaris}. The increased need and application of these mission types has inspired further research in methods to lower costs, increase fuel savings, and find solutions to rendezvous problems with increasingly complex constraints, all while optimizing for computational efficiency.
 
-One of those well-studied rendezvous methods utilizes model-predictive control (MPC), which has been shown to use less fuel due to minimum-fuel trajectory optimization while finding the best approach path within constraints of sensor visibility and safety. Richards and How developed and evaluated a new MPC implementation that optimizes using a novel mixed-integer linear programming method\cite{richards_how_MPC}. Fuel saving improvements over traditional MPC methods and the heritage glideslope approach. Singh and Bortolami presented an MPC solution to control one of the Space Shuttle's approach phases; they optimized for fuel and constrained the sensor line-of-sight and thruster firing directions to avoid plume impingement \cite{singh_bortolami_MPC}. They analyzed seven real-world cases of the space shuttle's standard orbit raising maneuver on its way to the ISS. Cairano and Park shows another example of how an MPC can be used for RPO maneuvers \cite{cairano_park_MPCApproach}. Their MPC implementation was robust to thrust errors, air drag (low Earth orbit), and solar pressure (geostationary orbits). They optimized considering time-to-dock and fuel consumption while constraining thrust magnitude, line-of-sight, and approach velocity. Kannan and Sajadi-Alamdari apply MPC to spacecraft rendezvous maneuvers while considering fuel-efficiency and collision avoidance in their cost function \cite{kannan_sajadi_MPC}. Park and Zagaris dive deeper into collision avoidance during rendezvous operations. Both linear and non-linear MPC methods are used to optimize fuel while avoiding obstacles, limit thrust magnitudes, and operating within safe entry cones. The linear technique uses hyperplanes to convexify obstacles while the nonlinear solution utilizes ellipsoids. The linear method proved to be much more robust, stable, and computationally practical.
+One of those well-studied rendezvous methods utilizes model-predictive control (MPC), which has been shown to use less fuel due to minimum-fuel trajectory optimization while finding the best approach path within constraints of sensor visibility and safety \cite{richards_how_MPC}. Richards and How developed and evaluated a new MPC implementation that optimizes using a novel mixed-integer linear programming method. Fuel saving improvements over traditional MPC methods and the heritage glideslope approach, in which the chaser vehicle
+moves along a straight line towards its target. Singh and Bortolami presented an MPC solution to control one of the Space Shuttle's approach phases; they optimized the approach path for fuel and constrained the sensor line-of-sight and thruster firing directions to avoid plume impingement \cite{singh_bortolami_MPC}. They analyzed seven real-world cases of the space shuttle's standard orbit raising maneuver on its way to the ISS. Cairano and Park shows another example of how an MPC can be used for RPO maneuvers [ ? ]. Their MPC implementation was robust to thrust errors, air drag (low Earth orbit), and solar pressure (geostationary orbits). They optimized considering time-to-dock and fuel consumption while constraining thrust magnitude, line-of-sight, and approach velocity. Kannan and Sajadi-Alamdari apply MPC to spacecraft rendezvous maneuvers while considering fuel-efficiency and collision avoidance in their cost function [ ? ]. Park and Zagaris explore collision avoidance during rendezvous operations through both linear and non-linear MPC methods to optimize fuel, limit thrust magnitudes, and operating within safe entry cones. The linear technique uses hyperplanes to convexify obstacles while the nonlinear solution utilizes ellipsoids. The linear method proved to be much more robust, stable, and computationally practical.
 
 Another control scheme that has been used for rendezvous maneuvers is called adaptive control. Filipe and Tsiotras proposed an adaptive position and attitude (pose) tracking controller for proximity operations that requires no knowledge about the mass and inertia of the chaser satellite \cite{filipe_tsiotras_dualQ}. It can also take into account gravitational acceleration, gravity-gradient torque, and other constant disturbance forces and torques. This method can perform system identification of the chaser satellite, given that sufficient conditions are met, and then proceed to approach and then dock the target satellite. 
 
-For MPC, adaptive control, and other methods, offline and online system identification techniques are a necessity if high accuracy and precision control is desired, which many times requires costly and expensive volumes of data collection and processing. Within the previously cited adaptive control implementation, Filipe and Tsiotras calculate mass and inertia properties of the system by using known sets of disturbance forces and torques. With this method, the system identification is limited by the measurement quality of the applied forces and torques. There is another system identification technique that was investigated by Kaiser, Kutz, and Brunton that was used within an MPC method called sparse identification of nonlinear dynamics (SINDY) \cite{KaiserKutz_SparseID}. SINDY is a data-driven system identification algorithm which can be used to derive governing equations for a nonlinear dynamic systems. In this work, the authors compare SINDY to dynamic mode decomposition (DMD) and a multilayer neural network (NN). They show that sparse identification is preferred when a low volume of noisy data is available and a fast computation time is required. Also, SINDY sheds light on the underlying nonlinear dynamic equations of the system, instead of just having a black box that sheds little to no physical insight. Another strength of SINDY is that it is fast enough to run on embedded systems \cite{provost_williams_SINDY}. Lastly one of the most useful features of SINDY is that the system identification can be used with control inputs along with other external forcing. SINDY has a few weaknesses, but they can be mitigated. The first is that a sufficient library of functions must be assumed to identify high-dimensional systems \cite{KaiserKutz_SparseID}; this can be prevented by increasing the function library size. Another drawback to this technique is that it does not react effectively to abrupt changes in dynamics, but this concern can be alleviated by using linear methods like DMD while the system dynamics settle\cite{KaiserKutz_SparseID}.
+For MPC, adaptive control, and other methods, offline and online system identification techniques are a necessity if high accuracy and precision control is desired, which many times requires costly and expensive volumes of data collection and processing. Within the previously cited adaptive control implementation, Filipe and Tsiotras calculate mass and inertia properties of the system by using known sets of disturbance forces and torques. With this method, the system identification is limited by the measurement quality of the applied forces and torques. Another system identification technique investigated by Kaiser, Kutz, and Brunton that was used with MPC is called sparse identification of nonlinear dynamics (SINDY) \cite{SINDY_MPC_Brunton}. SINDY is a data-driven system identification algorithm which can be used to derive governing equations for a nonlinear dynamic systems. In this work, the authors compare SINDY to dynamic mode decomposition (DMD) and a multilayer neural network (NN). They show that sparse identification is preferred when a low volume of noisy data is available and a fast computation time is required. Also, SINDY sheds light on the underlying nonlinear dynamic equations of the system, instead of just having a black box that provides little to no physical insight. SINDY is also fast enough to run on embedded systems \cite{provost_williams_SINDY}. Lastly one of the most useful features of SINDY is that the system identification can be used with control inputs along with other external forcing. SINDY has a few weaknesses, but they can be mitigated. The first is that a sufficient library of functions must be assumed to identify high-dimensional systems \cite{SINDY_MPC_Brunton}; this can be prevented by increasing the function library size. Another drawback to this technique is that it does not react effectively to abrupt changes in dynamics, but this concern can be alleviated by using linear methods like dynamic mode decomposition (DMD) while the system dynamics settle.
  
+Robotics and spacecraft rendezvous operations go hand-in-hand, and a powerful tool known as dual quaternions, used mostly with robots, can be brought over to bridge the gap to the on-orbit servicing realm \cite{Tsiotras_Valverde_Alfred_DualQ_Robot}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position and translation. Dual quaternions are preferred over quaternion-vector representations for several reasons. 
 
-Robotics and spacecraft rendezvous operations go hand-in-hand, and a powerful tool known as dual quaternions, used mostly with robots, can be brought over to bridge the gap to the on-orbit servicing realm \cite{valverde_tsiotras_spacecraftrobot}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position and translation. Dual quaternions are preferred over quaternion-vector representations for several reasons. Control laws can be written in a more compact form, pose transformations requires less computations than quaternion-vector method, natural coupling between rotational and translational motion is inherent, there is a strong parallel between rotational-only kinematics and rotation-translation dual quaternion kinematics, control stability is proven in one step, often controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions, kinematics can be obtained easily because of multiplicative properties, constraint equations come in a simple form, and problems involving kinematic chains are more easily solved \cite{filipe_tsiotras_dualQ,tsiotras_valverde_DualQuatAsTool,dooley_mccarthy_spatialrigidbody}. Using this number set does come with what some may see as a drawback. For instance, two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands. \cite{dooley_mccarthy_spatialrigidbody,lee_mesbahi,constrainedautonomousprecision}
+%%% rewritten 
 
+Control laws can be written in a more compact form. Pose transformations using dual quaternions are more computationally efficient than the quaternion-vector method. There is natural coupling between rotational and translational motion as well as between rotational-only kinematics and rotation-translation dual quaternion kinematics. Kinematics for dual quaternions can be easily derived due to multiplicative properties, and kinematic problems can be solved in fewer steps. Furthermore, constraint equations come in a simple form and control stability can be proven in one step. Controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions \cite{filipe_tsiotras_dualQ, Valverde_Tsiotras_Kinematics_DualQ, Dooley_McCarthy_RBD_dualQ}. 
 
-The contribution of this paper to the topics herein discussed is to apply MPC to RPO while gathering system dynamics knowledge solely using SINDY. A trade study will be conducted varying orbit parameters, mass properties, measurement noise, and controller constraints. All analysis will be done with dual quaternions to provide another example of their industry-proven strengths.
+Using this number set does come with what some may see as a drawback. For instance, two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands. \cite{Dooley_McCarthy_RBD_dualQ, Reynolds_Szmuk_Malyuta_Mesbahi_DualQ }
+
+In this paper, we propose a fuel optimal controller for the rendezvous proximity operations (RPO) problem. We use the dual quaternion formulation SINDY and MPC to control the position and orientation of the chaser satellite with respect to its target in the presence of external forces while satisfying the actuators' constraints. 
 
 \section{Dual Quaternion Concept Example}
 All dynamics and controls equations discussed in this work are expressed using dual quaternions; before diving in, a quick introduction of this number set is given via an example. More thorough mathematical properties of quaternions, dual numbers, dual quaternions, and necessary operators are given in reference \citenum{filipe_tsiotras_dualQ}. 
 
-Within the aerospace industry, single quaternions are used to express the attitude between two reference frames of interest. Combining quaternions with the concept of a dual number $\epsilon$, where $\epsilon^2 = 0$, but $\epsilon \ne 0$, allows the encoding of both rotational and translational information relating two reference frames. As an example, take the diagram in figure \ref{fig:Rel_Pos} showing the relative positions between chaser and target spacecraft orbiting a gravitational body. Expressing dual quaternions with a hat symbol, one would express the pose of the chaser with respect to its target as
+Within the aerospace industry, single quaternions are used to express the attitude between two reference frames of interest. Combining quaternions with the concept of a dual number $\epsilon$, where $\epsilon^2 = 0$, but $\epsilon \ne 0$, allows the encoding of both rotational and translational information relating two reference frames. Let us consider the chaser and target in the Newtonian frame as shown in Figure \ref{fig:Rel_Pos}. Expressing dual quaternions with a hat symbol, one would express the pose of the chaser with respect to its target as
 
 \begin{figure}[h!]
 	\centering\includegraphics[width=3.5in]{Figures/REL_POSE.pdf}
@@ -90,12 +95,12 @@ Within the aerospace industry, single quaternions are used to express the attitu
 where $q_{B/D}$ is the attitude unit quaternion and $r^B_{B/D}$ is the relative position vector of the chaser with respect to the target, in a body fixed basis, represented as a quaternion. Quaternions can be expressed using an ordered pair where the first and second coordinates are the vector and scalar parts, respectively. Using that notation, the attitude is
 \begin{equation}
 \label{eq:att_quat}
-q_{B/D} = (\textbf{n}\sin{(\phi/2)} , \cos{(\phi/2)}) 
+q_{B/D} = (\hat{n}\sin{(\phi/2)} , \cos{(\phi/2)}) 
 \end{equation}
 where $\textbf{n}$ is the skew unit vector that one rotates frame D about by $\phi$ to get frame B. The relative position as a quaternion vector-scalar ordered pair is 
 \begin{equation}
 \label{eq:pos_quat}
-r_{B/D}^B = (\textbf{r}_{B/D}^B, 0).
+r_{B/D}^B = (\hat{r}_{B/D}^B, 0).
 \end{equation}
 %Another operator needed to understand the relative motion equation is the dual quaternion conjugation where
 %\begin{equation}
@@ -142,9 +147,9 @@ and the total external dual force applied to the body about its mass center, in 
 The components that make up the total external dual force, in the order shown in \eqref{eq:orbit_forces}, are gravitational force, gravity-gradient torque, Earth-oblateness force, solar dual force, atmospheric drag, dual disturbance force, and finally control dual force.
 
 \section{Using SINDY for System Identification within MPC}
-Control methods that utilize system models, such as MPC, are powerful because of their potential application to nonlinear systems with constraints. Nevertheless, this strength in the control domain can come hand-in-hand with a computational efficiency and data logging requirement weakness. The investigations in references \citenum{KaiserKutz_Sparse} and \citenum{BruntonProctor_SparseID} show how both of these potential drawbacks can be mitigated with the use of SINDY for system identification. These same methods will be adapted to rendezvous proximity maneuver applications.
+Control methods that utilize system models, such as MPC, are powerful because of their potential application to nonlinear systems with constraints. Nevertheless, this strength in the control domain can come hand-in-hand with a computational efficiency and data logging requirement weakness. The investigations in references \cite{SINDY_MPC_Brunton} and \cite{brunton_proctor_SINDY} show how both of these potential drawbacks can be mitigated with the use of SINDY for system identification. These same methods will be adapted to rendezvous proximity maneuver applications.
 
-Figure \ref{fig:SINDY_MPC} shows an overview of how SINDY will be applied to rendezvous maneuvers via MPC. The sparse regression algorithm will take in noisy attitude and range sensor data to calculate an approximation of the relative motion dynamics expressed by equation \eqref{eq:dyn}. More specifically, mass, inertia, external forces and torques will be determined only with sensor data for use in the MPC optimal control problem \cite{KaiserKutz_Sparse}. 
+Figure \ref{fig:SINDY_MPC} shows an overview of how SINDY will be applied to rendezvous maneuvers via MPC. The sparse regression algorithm will take in noisy attitude and range sensor data to calculate an approximation of the relative motion dynamics expressed by equation \eqref{eq:dyn}. More specifically, mass, inertia, external forces and torques will be determined only with sensor data for use in the MPC optimal control problem \cite{SINDY_MPC_Brunton}. 
 \begin{figure}[h!]
 	\centering\includegraphics[width=3.5in]{Figures/SINDY_MPC.pdf}
 	\caption{System identification using SINDY within MPC, for RPO.}
@@ -248,7 +253,7 @@ where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscrip
 %Numbering of section headings and paragraphs should be avoided. Major section headings are majuscule, bold, flush (aligned) left, and use the same style san-serif font as the body text. Widow and orphan lines should also be avoided; more than one line of a paragraph should appear at the end or beginning of a page, not one line by itself. A heading should not appear at the bottom of a page without at least two lines of text. Equations, figures, and tables must be sequentially numbered with no repeated numbers or gaps. Excessive white space --- such as large gaps before, between, and after text and figures --- should be minimal and eliminated where possible.
 
 
-\subsection{This Is a Sample of a Secondary (Sub-Section) Heading}
+%\subsection{This Is a Sample of a Secondary (Sub-Section) Heading}
 %%% GUIDELINES 
 %Secondary, or sub-section, headings are title case (miniscule lettering with the first letter of major words majuscule), flush left, and bold. Secondary headings use the same serif font style as the body text and, like section headings, should not be numbered. Tertiary headings should be avoided, but if necessary, they are run-in, italic, and end in a period, as illustrated with the next six (6) paragraphs.
 %\begin{equation}
@@ -280,12 +285,12 @@ where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscrip
 %Illustrations are referenced by name and without formatting embellishments, such as Figure~\ref{fig:xxx}, Figure 2, \emph{etc}., or, Figures 3 and 4 (\emph{e.g}., not figure (1), Fig. 1, \underline{Figure 1}, \emph{Figure 1}, \emph{etc}.). Each illustration should have a caption unless it is a mere sketch. Single-phrase captions are usually in title case; they are bold 10-point serif font and centered below the figure as shown in Figure~\ref{fig:xxx}. An explanatory caption of several sentences is permissible. Ideally, every illustration should be legibly sized -- usually about one-half or one-quarter page -- and appear in the text just before it is called out or mentioned. Alternatively, it is also permissible to place all figures together at the end of the text as a separate appendix; however, these two conventions should not be mixed. All figures and callouts should remain clearly legible after reduction. All illustrations appear as black and white in the final printing, although colors are retained in the electronic (CD-ROM) version.
 
 
-\subsubsection{Graphic Formats.} 
+%\subsubsection{Graphic Formats.} 
 %%% GUIDELINES
 %The highest quality formats are Encapsulated PostScript (EPS) and PDF vector-graphic formats. These formats are recommended for all illustrations, unless they create document files that are excessively large. Specifically, you should change the graphic format or compress the image resolution whenever an illustrated page takes more than two seconds to render onscreen, or, whenever the total manuscript file size starts to approach 5 Mb. Photographs, illustrations that use heavy toner or ink (such as bar graphs), and figures without text callouts, may be suitably displayed with picture formats such as BMP, GIF, JPEG, PNG, TIFF, \emph{etc}. Line drawings, plots, and callouts on illustrations, should not use picture formats that do not provide sharp reproduction. All graphical content must be embedded when creating a PDF document, especially any fonts used within the illustration. Note that the Windows Metafile Format (WMF) is sometimes problematic and should be avoided.
 
 
-\subsubsection{References and Citations.} 
+%\subsubsection{References and Citations.} 
 %%% GUIDELINES
 %The citation of bibliographical endnote references is indicated in the text by superscripted Arabic numerals, preferably at the end of a sentence.\cite{doe2005, style1959}   If this citation causes confusion in mathematics, or if a superscript is inappropriate for other reasons, this may be alternately expressed as (Reference~\citenum{doe2005}) or (see References~\citenum{doe2005} and \citenum{style1959}), (\emph{e.g}., not [1], Ref. (1), \emph{etc}.). While there is no singly prescribed format for every bibliographical endnote, references should be consistent in form. Citations should be sufficient to allow the reader to precisely find the information being cited, and should include specific pages, editions, and printing numbers where necessary. URL citations are discouraged, especially when an archival source for the same information is available. If a URL citation is required, it should appear completely and as a footnote instead of a bibliographical reference.\footnote{\url{http://www.univelt.com/FAQ.html\#SUBMISSION}}  The citation of private communication is especially discouraged, but if required it should be cited as a footnote and include the date, professional affiliation, and location of the person cited.\footnote{Gangster, Maurice (1999), personal correspondence of March 21st. Sr. Consultant, Space Cowboy Associates, Inc., Colorado Springs, CO.}  
 %
@@ -317,24 +322,24 @@ where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscrip
 
 
 
-\section{Manuscript Submission}
+%\section{Manuscript Submission}
 %%% GUIDELINES
 %The Portable Document Format (PDF) is the preferred format for electronic submissions.\footnote{By contributing your manuscript for proceedings publication, you necessarily extend any copyrights to the AAS and its designated publisher, to allow the AAS to publish your manuscript content in all the forms that it wishes.}
 % The page size should be 8.5 inches by 11 inches exactly. You should use ``press-quality'' or ``high-quality'' software settings to create your PDF file; these settings tend to keep the PDF file true to the original manuscript layout, and automatically embed the correct fonts, \emph{etc}. Otherwise, settings such as ``Embed All Fonts'', \emph{etc}., should be selected as available. The use of internal hyperlinks within the electronic file is not encouraged because hyperlinks may not be supported in the final version of the electronic proceedings.
 
-\subsection{Journal Submission}
+%\subsection{Journal Submission}
 %%% GUIDELINES
 %If you wish to submit this manuscript to the \emph{Journal of Astronautical Sciences}, it must be re-formatted into a double-spaced format. This can be done easily with this template. At the top of the document, there are two (2) types document class statements ({\tt paper} and {\tt submit}).  The first type is the one to use for a conference paper.  The second type , which is commented out, can be used to reformat the paper for the JAS journal submission.
 
 
-\section{Conclusion}
+%\section{Conclusion}
 %%% GUIDELINES 
 %Some AAS meetings are co-sponsored with the American Institute of Aeronautics and Astronautics (AIAA). When your paper number starts with ``AAS'', or when the conference is described as a joint ``AAS/AIAA'' meeting with the AAS listed first, this AAS conference proceedings format shall be used.
 %
 %Your final manuscript should be camera-ready as submitted --- free from technical, typographical, and formatting errors. Manuscripts not suitable for publication are omitted from the final proceedings.
 
 
-\section{Acknowledgment}
+%\section{Acknowledgment}
 %%% GUIDELINES 
 %Any acknowledgments by the author may appear here. The acknowledgments section is optional.
 
@@ -343,7 +348,7 @@ where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscrip
 
 
 
-\section{Notation}
+%\section{Notation}
 
 %%% GUIDELINES 
 %\begin{tabular}{r l}
@@ -357,13 +362,13 @@ where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscrip
 
 
 
-\appendix
-\section*{Appendix: Title here}
+%\appendix
+%\section*{Appendix: Title here}
 %%% GUIDELINES 
 %Each appendix is its own section with its own section heading. The title of each appendix section is preceded by ``APPENDIX: '' as illustrated above, or ``APPENDIX A: '', ``APPENDIX B: '', \emph{etc}., when multiple appendixes are necessary. Appendices are optional and normally go after references; however, appendices may go ahead of the references section whenever the word processor forces superscripted endnotes to the very end of the document. The contents of each appendix must be called out at least once in the body of the manuscript.
 
 
-\subsection*{Miscellaneous Physical Dimensions}
+%\subsection*{Miscellaneous Physical Dimensions}
 
 %%% GUIDELINES
 %The page size shall be the American standard of 8.5 inches by 11 inches (216 mm x 279 mm). Margins are as follows: Top -- 0.75 inch (19 mm); Bottom -- 1.5 inches (38 mm); Left -- 1.25 inches (32 mm); Right -- 1.25 inch (32 mm). The title of the manuscript starts one inch (25.4 mm) below the top margin. Column width is 6 inches (152.5 mm) and column length is 8.75 inches (222.5 mm). The abstract is 4.5 inches (114 mm) in width, centered, justified, 10 point normal (serif) font.
