@@ -13,7 +13,8 @@ Introduction
 - Paper presents algorithm that is designed to compute fuel-optimal trajectories in real time that explicitly account for constraints.
 - Constraint satisfaction in this paper allows for less accessible landing areas (more interesting)
 - First work to present unit dual quaternion approach to feedforward trajectory generation
-
+- Previous work: "We view this distinction as a design choice, but note that dual quaternions are an elegant and efficient parameterization for cases with constraints that
+couple rotation and translation"
 Conclusion
 - Two numerical cases studied lunar descent scenario where it was shown that state triggered constraints are effective  
 
