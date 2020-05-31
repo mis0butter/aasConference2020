@@ -64,14 +64,9 @@ moves along a straight line towards its target. Singh and Bortolami presented an
 Another control scheme that has been used for rendezvous maneuvers is called adaptive control. Filipe and Tsiotras proposed an adaptive position and attitude (pose) tracking controller for proximity operations that requires no knowledge about the mass and inertia of the chaser satellite \cite{FilipeTsiotras_AdaptiveDualQ}. It can also take into account gravitational acceleration, gravity-gradient torque, and other constant disturbance forces and torques. This method can perform system identification of the chaser satellite, given that sufficient conditions are met, and then proceed to approach and then dock the target satellite. 
 
 For MPC, adaptive control, and other methods, offline and online system identification techniques are a necessity if high accuracy and precision control is desired, which many times requires costly and expensive volumes of data collection and processing. Within the previously cited adaptive control implementation, Filipe and Tsiotras calculate mass and inertia properties of the system by using known sets of disturbance forces and torques. With this method, the system identification is limited by the measurement quality of the applied forces and torques. Another system identification technique investigated by Kaiser, Kutz, and Brunton that was used with MPC is called sparse identification of nonlinear dynamics (SINDY) \cite{KaiserKutz_SINDyMPC}. SINDY is a data-driven system identification algorithm which can be used to derive governing equations for a nonlinear dynamic systems. In this work, the authors compare SINDY to dynamic mode decomposition (DMD) and a multilayer neural network (NN). They show that sparse identification is preferred when a low volume of noisy data is available and a fast computation time is required. Also, SINDY sheds light on the underlying nonlinear dynamic equations of the system, instead of just having a black box that provides little to no physical insight. SINDY is also fast enough to run on embedded systems \cite{ProvostBrunton_SINDyAnalysis}. Lastly one of the most useful features of SINDY is that the system identification can be used with control inputs along with other external forcing. SINDY has a few weaknesses, but they can be mitigated. The first is that a sufficient library of functions must be assumed to identify high-dimensional systems \cite{KaiserKutz_SINDyMPC}; this can be prevented by increasing the function library size. Another drawback to this technique is that it does not react effectively to abrupt changes in dynamics, but this concern can be alleviated by using linear methods like dynamic mode decomposition (DMD) while the system dynamics settle.
- 
-Robotics and spacecraft rendezvous operations go hand-in-hand, and a powerful tool known as dual quaternions, used mostly with robots, can be brought over to bridge the gap to the on-orbit servicing realm \cite{TsiotrasValverde_DualQTool}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position and translation. Dual quaternions are preferred over quaternion-vector representations for several reasons. 
-
 %%% rewritten 
-% FIX CITATIONS
-Control laws can be written in a more compact form \cite{FilipeKontitsis_ExtendedKalmanFilterDualQ}. Pose transformations using dual quaternions are more computationally efficient than the quaternion-vector method. There is natural coupling between rotational and translational motion as well as between rotational-only kinematics and rotation-translation dual quaternion kinematics. Kinematics for dual quaternions can be easily derived due to multiplicative properties, and kinematic problems can be solved in fewer steps. Furthermore, constraint equations come in a simple form and control stability can be proven in one step. Controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions \cite{FilipeTsiotras_AdaptiveDualQ, ValverdeTsiotras_SCRobotDualQ, DooleyMcCarthy_SpatialRBDDualQ}. 
-
-Using this number set does come with what some may see as a drawback. For instance, two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands \cite{DooleyMcCarthy_SpatialRBDDualQ, ReynoldsSzmuk_DualQDescent,LeeMesbahi_ConstrainedMPCDualQ}.
+% FIX CITATIONS 
+Robotics and spacecraft rendezvous operations go hand-in-hand, and a powerful tool known as dual quaternions, used mostly with robots, can be brought over to bridge the gap to the on-orbit servicing realm \cite{TsiotrasValverde_DualQTool}. This set of numbers extends the utility found in representing attitude as a quaternion to describe position and translation. Dual quaternions are preferred over quaternion-vector representations for several reasons. One of the reasons that Control laws can be written in a more compact form \cite{FilipeKontitsis_ExtendedKalmanFilterDualQ}. Pose transformations using dual quaternions are more computationally efficient than the quaternion-vector method. There is natural coupling between rotational and translational motion as well as between rotational-only kinematics and rotation-translation dual quaternion kinematics. Kinematics for dual quaternions can be easily derived due to multiplicative properties, and kinematic problems can be solved in fewer steps. Furthermore, constraint equations come in a simple form and control stability can be proven in one step. Controllers or filters developed for attitude quaternions can be adapted for use with dual quaternions \cite{FilipeTsiotras_AdaptiveDualQ, ValverdeTsiotras_SCRobotDualQ, DooleyMcCarthy_SpatialRBDDualQ}. Using this number set does come with what some may see as a drawback. For instance, two additional constraint equations are necessary, derived motion relationships can be complicated, physical significance of variables are not initially apparent, and there is a quadratic cost on required control commands \cite{DooleyMcCarthy_SpatialRBDDualQ, ReynoldsSzmuk_DualQDescent,LeeMesbahi_ConstrainedMPCDualQ}.
 
 In this paper, we propose a fuel optimal controller for the rendezvous proximity operations (RPO) problem. We use the dual quaternion formulation SINDY and MPC to control the position and orientation of the chaser satellite with respect to its target in the presence of external forces while satisfying the actuators' constraints. 
 
@@ -95,12 +90,12 @@ Within the aerospace industry, single quaternions are used to express the attitu
 where $q_{B/D}$ is the attitude unit quaternion and $r^B_{B/D}$ is the relative position vector of the chaser with respect to the target, in a body fixed basis, represented as a quaternion. Quaternions can be expressed using an ordered pair where the first and second coordinates are the vector and scalar parts, respectively. Using that notation, the attitude is
 \begin{equation}
 \label{eq:att_quat}
-q_{B/D} = (\hat{n}\sin{(\phi/2)} , \cos{(\phi/2)}) 
+q_{B/D} = (\vec{\mathbf{n}}\sin{(\phi/2)} , \cos{(\phi/2)}) 
 \end{equation}
-where $\textbf{n}$ is the skew unit vector that one rotates frame D about by $\phi$ to get frame B. The relative position as a quaternion vector-scalar ordered pair is 
+where $\vec{\mathbf{n}}$ is the skew unit vector that one rotates frame D about by $\phi$ to get frame B. The relative position as a quaternion vector-scalar ordered pair is 
 \begin{equation}
 \label{eq:pos_quat}
-r_{B/D}^B = (\hat{r}_{B/D}^B, 0).
+r_{B/D}^B = (\vec{\mathbf{r}}_{B/D}^B, 0).
 \end{equation}
 %Another operator needed to understand the relative motion equation is the dual quaternion conjugation where
 %\begin{equation}
@@ -129,7 +124,7 @@ mI_{3x3} & 0_{3x1} & 0_{3x3} & 0_{3x1} \\
 0_{1x3} & 0 & 0_{1x3} & 1 
 \end{bmatrix}, 
 \end{equation}
-given chaser mass $m$ and inertia in spacecraft fixed basis
+given chaser mass $m$ and centroidal inertia in spacecraft fixed basis
 \begin{equation}
 \label{eq:sc_inertia}
 \bar{I}^B = 
@@ -151,7 +146,7 @@ Control methods that utilize system models, such as MPC, are powerful because of
 
 Figure \ref{fig:SINDY_MPC} shows an overview of how SINDY will be applied to rendezvous maneuvers via MPC. The sparse regression algorithm will take in noisy attitude and range sensor data to calculate an approximation of the relative motion dynamics expressed by equation \eqref{eq:dyn}. More specifically, mass, inertia, external forces and torques will be determined only with sensor data for use in the MPC optimal control problem \cite{KaiserKutz_SINDyMPC}. 
 \begin{figure}[h!]
-	\centering\includegraphics[width=3.5in]{Figures/SINDY_MPC.pdf}
+	\centering\includegraphics[width=4.0in]{Figures/SINDY_MPC.pdf}
 	\caption{System identification using SINDY within MPC, for RPO.}
 	\label{fig:SINDY_MPC}
 \end{figure}
@@ -164,12 +159,12 @@ The diagram shown in figure \ref{fig:SINCYC} shows the process of solving for th
 Then the control developer must select a library of candidate functions that will be used to build $\Theta(X,U)$. The candidate terms can include polynomial, trigonometric, and other nonlinear functions of states $X$ and inputs $U$. One then substitutes in the measured data into $\dot{X}$ and $\Theta$ in equation \eqref{eq:unknown_dyn}, and we choose $\Xi$ such that we have the minimum number of terms that effectively describe our dynamics. In other words, we solve for  
 \begin{equation}
 \label{eq:sparse_reg}
-\xi_k = \text{arg}\,\min\limits_{\xi_k}\frac{1}{2}||\dot{X}_k-\xi_k\Theta(X,U)||^2+\lambda||\xi_k||, 
+\xi_k = \arg\,\min\limits_{\xi_k}\frac{1}{2}||\dot{X}_k-\xi_k\Theta(X,U)||^2+\lambda||\xi_k||, 
 \end{equation}
 where subscript $k$ in $\dot{X}_k$ and $\xi_k$ represents the $k$\textsuperscript{th} term of $\dot{X}$ and $\Xi$, and $\lambda$ is chosen to balance between model complexity and accuracy.
 
 \begin{figure}[h!]
-	\centering\includegraphics[width=3.5in]{Figures/SINDYC.pdf}
+	\centering\includegraphics[width=4.0in]{Figures/SINDYC.pdf}
 	\caption{Process of using measured data to identify nonlinear system dynamics.}
 	\label{fig:SINCYC}
 \end{figure}
