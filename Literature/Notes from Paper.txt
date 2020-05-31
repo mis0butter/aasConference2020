@@ -1,0 +1,57 @@
+%%% NEEDS LOTS OF WORK 
+%***
+%
+%Space rendezvous missions have been extensively analyzed using various forms of constrained path planning and optimization techniques. (REMOVE The ability to approach rendezvous missions with more stringent constraints has increased with the control capability.) The combination of sensor resolution and speed, modern control techniques along with faster processing, and finer actuation have made proximity operations more practical.
+%
+%(Make a better transition)A space rendezvous is a problem of performing orbit maneuvers where at least one active spacecraft and another, possibly passive space body converge onto the same orbit. Two classification groups are generally utilized when describing the spacecraft taking part in these types of missions: target and chaser. The goal in these rendezvous operations is to control the active chaser satellite with the objective to match its orbit velocity and position to that of the passive target body (should we place target and chaser in quotes?). Once the chaser gets sufficiently close to the target, it can hold its relative position constant, follow a profile about the objective, or approach the spacecraft for docking (We are assuming constant relative position REMOVE THIS).
+%
+%***
+%
+%*wordsmith* 
+%Orbital rendezvous with a staellite in staitonary low-earth orbit has been extensively analyzed. Various forms of constrained path planning and optimization have been analyzed using modern optimization and serach techniques, however, as the capability and vaailability of targetting aids for cooperative proximity operations and docking have increased, the nature of the approach problem and the operational constraints during it have changed. 
+%
+%In this paper, we persent a new onboard optimal guidance and targetting approach using Model Predictive control, which explicitly incorporate sthe trajectory constraints associated with this transfer. A novel contribution of this approach is its ability to explicitly handle the trajectory state, control, and mission safety constraints. Model Predictive Control has been used in the process industries in chemical plants and oi lrefineries since the 1980s, but in the new millennium has found applications in the space engineering industry. The main advantage of MPC is the fact that is allows the current timeslot to be optimized, while keeping future timeslots into account. MPCs rely on dynamic models of hte process, most often linear empirical models obtained by system identification. 
+%
+%--> transition into SINDY
+%*wordsmith* 
+%
+%Rendezvous proximity operations (RPO) are becoming more commonplace as they make servicing missions, etc (Look up what RPO can be used for) increasingly possible. A common challenge when planning an RPO mission is accurately determining, representing, and controlling the attitude, positions, and respective rates of the approaching spacecraft. A useful represention of the position and attitude measurements (pose) is dual . Use sensor data to approximate rendezvous proximity operations (RPO) equations of motion EOMs using SINDy. Implement model predictive control (MPC) with the approximated EOMs.
+%
+%CAUTION DO NOT PLAGIARIZE
+%A space rendezvous is an orbital maneuver during which two spacecraft, one of which is often a space station, arrive at the same orbit and approach to a very close distance (e.g. within visual contact). Rendezvous requires a precise match of the orbital velocities and position vectors of the two spacecraft, allowing them to remain at a constant distance through orbital station-keeping. Rendezvous may or may not be followed by docking or berthing, procedures which bring the spacecraft into physical contact and create a link between them.
+%
+%The same rendezvous technique can be used for spacecraft "landing" on natural objects with a weak gravitational field, e.g. landing on one of the Martian moons would require the same matching of orbital velocities, followed by a "descent" that shares some similarities with docking.
+%
+%
+%The standard technique for rendezvous and docking is to dock an active vehicle, the "chaser", with a passive "target". This technique has been used successfully for the Gemini, Apollo, Apollo/Soyuz, Salyut, Skylab, Mir, ISS, and Tiāngōng programs.[citation needed]
+%
+%To properly understand spacecraft rendezvous it is essential to understand the relation between spacecraft velocity and orbit. A spacecraft in a certain orbit cannot arbitrarily alter its velocity. Each orbit correlates to a certain orbital velocity. If the spacecraft fires thrusters and increases (or decreases) its velocity it will obtain a different orbit, one that correlates to the higher (or lower) velocity. For circular orbits, higher orbits have a lower orbital velocity. Lower orbits have a higher orbital velocity.
+%
+%For orbital rendezvous to occur, both spacecraft must be in the same orbital plane, and the phase of the orbit (the position of the spacecraft in the orbit) must be matched. The "chaser" is placed in a slightly lower orbit than the target. The lower the orbit, the higher the orbital velocity. The difference in orbital velocities of chaser and target is therefore such that the chaser is faster than the target, and catches up with it.[citation needed]
+%
+%Once the two spacecraft are sufficiently close, the chaser's orbit is synchronized with the target's orbit. That is, the chaser will be accelerated. This increase in velocity carries the chaser to a higher orbit. The increase in velocity is chosen such that the chaser approximately assumes the orbit of the target. Stepwise, the chaser closes in on the target, until proximity operations (see below) can be started. In the very final phase, the closure rate is reduced by use of the active vehicle's reaction control system. Docking typically occurs at a rate of 0.1 ft/s (0.030 m/s) to 0.2 ft/s (0.061 m/s).[16]
+%CAUTION DO NOT PLAGIARIZE
+%
+%
+%Related work
+%Adaptive control with dual quaternions
+%MPC with RPO and dual quaternions
+%SINDy with control
+%
+%
+%Advantage of our method
+%
+%
+%
+%One of the biggest challenges introduced
+%by this technology is the need to simultaneously and accurately
+%track both time-varying relative position and attitude references
+%trajectories to avoid collisions between the satellites and achieve mission objectives.
+
+
+%%% SPACE RENDEZVOUS DEFINITION 
+%A space rendezvous is an orbit maneuver where two bodies in space converge onto the same orbit. Two classification groups are generally utilized when describing the spacecraft taking part in these types of missions: target and chaser. The goal in these rendezvous operations is to control the active chaser satellite to match the orbit velocity and position of the target body. Rendezvous operations can be broken down into two segments: inertial and relative. When the chase has the target outside of its sensor range, it is in the inertial segment of its approach. Once the chaser gets sufficiently close to reliably sense its target, it is in the relative segment of the approach, and proximity operations commence.  When in proximity operations it can: 
+%
+%1. hold its relative position constant, 
+%2. follow a profile about the objective, 
+%3. or approach the spacecraft for docking
